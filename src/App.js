@@ -11,11 +11,52 @@ class App extends Component {
    this.state = {
      Display: 'load',
  };
+
+ this.Searchnow = this.Searchnow.bind(this);
+
  }
+
+
+
+ Searchnow(searchcomp,searchvalue,action) {
+ alert('Search button clicked item serach: '+searchvalue+' Options : '+searchcomp+' Action :'+action);
+var currentURL ='http://localhost:8080/catalogue/';
+var URLparameter ='catalogueItem?type_of#non_stock,item_name='+searchvalue+'@&sortBy=+item_name';
+URLparameter = encodeURIComponent(URLparameter);
+currentURL = currentURL+URLparameter
+
+alert(currentURL);
+
+var request = new XMLHttpRequest();
+ request.open('GET', currentURL, true);
+//request.setRequestHeader("Access-Control-Allow-Origin", "*");
+//request.setRequestHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//headers:{authorization:"Basic" + encAuthString}})
+//request.setRequestHeader("authorization", "Basic ");
+// request.setRequestHeader("X-METHOD", "GET");
+request.send(null);
+
+   request.onreadystatechange = function() {
+     if(request.readyState === 4) { // done
+       if(request.status === 200) { // complete
+         console.log(request.responseText)
+         this.state = {
+           Display: 'itemlist',
+         };
+         alert('Page uk load : '+this.state.Display);
+     }
+   }
+}
+
+ }
+
+
+
+
 
  render() {
 
-  // alert('Page load : '+this.state.Display);
+alert('Render : '+this.state.Display);
 
    return (
 
@@ -24,7 +65,7 @@ class App extends Component {
  {this.state.Display ==='load' &&
  <div>
   <CatalogueHeader action={this.state.Display} />
-  <ItemSearch />
+  <ItemSearch searchfunc={this.Searchnow}  action={this.state.Display} />
    </div>
 }
 

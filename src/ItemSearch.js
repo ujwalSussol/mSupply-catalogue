@@ -7,9 +7,9 @@ class ItemSearch extends Component {
       super(props);
    this.state = {
      searchitemvalue: 'Type a text',
-     searchitemoptions:'isnot'
+     searchitemoptions:'isnot',
+     searchfunc: React.PropTypes.func
  };
-this.Searchnow = this.Searchnow.bind(this);
 this.handleChange = this.handleChange.bind(this);
 
 }
@@ -22,34 +22,7 @@ this.handleChange = this.handleChange.bind(this);
     }
 
 
-  Searchnow() {
-  alert('Search button clicked item serach: '+this.state.searchitemvalue+' Options : '+this.state.searchitemoptions);
-var currentURL ='http://localhost:8080/catalogue/';
-var URLparameter ='catalogueItem?type_of#non_stock,item_name='+this.state.searchitemvalue+'@&sortBy=+item_name';
-URLparameter = encodeURIComponent(URLparameter);
-currentURL = currentURL+URLparameter
 
-alert(currentURL);
-
-var request = new XMLHttpRequest();
-  request.open('GET', currentURL, true);
-//request.setRequestHeader("Access-Control-Allow-Origin", "*");
-//request.setRequestHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//headers:{authorization:"Basic" + encAuthString}})
-//request.setRequestHeader("authorization", "Basic ");
-// request.setRequestHeader("X-METHOD", "GET");
-request.send(null);
-
-    request.onreadystatechange = function() {
-      if(request.readyState === 4) { // done
-        if(request.status === 200) { // complete
-          //console.log(request.responseText)
-
-      }
-    }
-}
-
-  }
 
   render() {
     return (
@@ -62,7 +35,7 @@ request.send(null);
         <option value="doesnot">does not start with</option>
       </select>
       <input type="text" defaultValue={this.state.searchitemvalue} onChange={this.handleChange.bind(this, 'searchitemvalue')}  />
-      <button onClick={this.Searchnow}> Search </button>
+      <button onClick={this.props.searchfunc.bind(this,this.state.searchitemoptions,this.state.searchitemvalue,this.props.action)}> Search </button>
       </div>
     );
   }
