@@ -36,14 +36,14 @@ var request = new XMLHttpRequest();
 // request.setRequestHeader("X-METHOD", "GET");
 request.send(null);
 
-   request.onreadystatechange = function() {
+   request.onreadystatechange = () => {
      if(request.readyState === 4) { // done
        if(request.status === 200) { // complete
          console.log(request.responseText)
-         this.state = {
+         this.setState({
            Display: 'itemlist',
-         };
-         alert('Page uk load : '+this.state.Display);
+         });
+         alert('App state : '+this.state.Display);
      }
    }
 }
@@ -56,7 +56,7 @@ request.send(null);
 
  render() {
 
-alert('Render : '+this.state.Display);
+alert('App Render : '+this.state.Display);
 
    return (
 
