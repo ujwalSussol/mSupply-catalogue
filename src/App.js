@@ -51,9 +51,6 @@ request.send(null);
  }
 
 
-
-
-
  render() {
 
 alert('App Render : '+this.state.Display);
