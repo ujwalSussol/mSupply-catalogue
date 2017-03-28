@@ -10,6 +10,7 @@ class App extends Component {
       super(props);
    this.state = {
      Display: 'load',
+     itemdata: []
  };
 
  this.Searchnow = this.Searchnow.bind(this);
@@ -39,9 +40,15 @@ request.send(null);
    request.onreadystatechange = () => {
      if(request.readyState === 4) { // done
        if(request.status === 200) { // complete
-         console.log(request.responseText)
+      console.log(request.responseText)
+  //  var myArr = JSON.parse(request.responseText);
+      var myArr = JSON.parse(request.responseText);
+
+      console.log('Ujwal log :'+myArr)
+
          this.setState({
            Display: 'itemlist',
+           itemdata: myArr,
          });
          alert('App state : '+this.state.Display);
      }
@@ -69,7 +76,7 @@ alert('App Render : '+this.state.Display);
 {this.state.Display ==='itemlist' &&
 <div>
  <CatalogueHeader action={this.state.Display} />
-  <ItemListView />
+  <ItemListView itemlistdata={this.state.itemdata}/>
   </div>
 }
 
