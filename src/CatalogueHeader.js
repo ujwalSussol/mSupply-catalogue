@@ -5,24 +5,17 @@ class CatalogueHeader extends Component {
   constructor(props) {
       super(props);
    this.state = {
+     homefunc: React.PropTypes.func
  };
-this.GoToItemSearch = this.GoToItemSearch.bind(this);
 }
-
-  GoToItemSearch() {
-
-  }
-
-
 
   render() {
     return (
       <div>
       <h1>
       {this.props.action ==='itemlist' &&
-      <button onClick={this.GoToItemSearch}> Go to serach </button>
+      <button onClick={this.props.homefunc.bind(this)}> Go to serach </button>
     }
-
       mSupply online Catalogue
 
      </h1>

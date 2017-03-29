@@ -14,19 +14,24 @@ class App extends Component {
  };
 
  this.Searchnow = this.Searchnow.bind(this);
+ this.GoToHome = this.GoToHome.bind(this);
+
 
  }
 
-
+ GoToHome() {
+   this.setState({ Display: 'load'});
+ }
 
  Searchnow(searchcomp,searchvalue,action) {
  alert('Search button clicked item serach: '+searchvalue+' Options : '+searchcomp+' Action :'+action);
+ //Note for this self learning project, I am just doing one type of query.
 var currentURL ='http://localhost:8080/catalogue/';
 var URLparameter ='catalogueItem?type_of#non_stock,item_name='+searchvalue+'@&sortBy=+item_name';
-URLparameter = encodeURIComponent(URLparameter);
+URLparameter = encodeURIComponent(URLparameter); //Need to do this so that the URL appears in the right format
 currentURL = currentURL+URLparameter
 
-alert(currentURL);
+//alert(currentURL);
 
 var request = new XMLHttpRequest();
  request.open('GET', currentURL, true);
@@ -44,13 +49,13 @@ request.send(null);
   //  var myArr = JSON.parse(request.responseText);
       var myArr = JSON.parse(request.responseText);
 
-      console.log('Ujwal log :'+myArr)
+      //console.log('Ujwal log :'+myArr)
 
          this.setState({
            Display: 'itemlist',
            itemdata: myArr,
          });
-         alert('App state : '+this.state.Display);
+      //   alert('App state : '+this.state.Display);
      }
    }
 }
@@ -60,7 +65,7 @@ request.send(null);
 
  render() {
 
-alert('App Render : '+this.state.Display);
+//alert('App Render : '+this.state.Display);
 
    return (
 
@@ -68,14 +73,14 @@ alert('App Render : '+this.state.Display);
 
  {this.state.Display ==='load' &&
  <div>
-  <CatalogueHeader action={this.state.Display} />
+  <CatalogueHeader homefunc={this.GoToHome} action={this.state.Display} />
   <ItemSearch searchfunc={this.Searchnow}  action={this.state.Display} />
    </div>
 }
 
 {this.state.Display ==='itemlist' &&
 <div>
- <CatalogueHeader action={this.state.Display} />
+ <CatalogueHeader homefunc={this.GoToHome} action={this.state.Display} />
   <ItemListView itemlistdata={this.state.itemdata}/>
   </div>
 }
